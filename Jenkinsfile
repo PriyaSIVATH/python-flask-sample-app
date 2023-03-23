@@ -24,7 +24,7 @@ pipeline {
         stage('Image Build') {
             steps {
                 // One or more steps need to be included within the steps block.
-                sh "docker build -t ${imageName+':'+tagName} ."
+                sh "docker build -t ${registryNexus+imageName+':'+tagName} ."
             }
         }
 
@@ -79,7 +79,7 @@ pipeline {
                         // >> 2. build image with regsitryUrl .. -- 192.168.0.155:8085/mypython-flaskapp
                     //    sh "docker push ${registryNexus+'/'+imageName+':'+tagName}" 
 
-                        sh "docker  tag  ${imageName+':'+tagName}  ${registryNexus+imageName+':'+tagName}"
+                        // sh "docker  tag  ${imageName+':'+tagName}  ${registryNexus+imageName+':'+tagName}"
 
                         sh "docker push ${registryNexus+imageName+':'+tagName}" 
 
