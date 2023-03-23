@@ -6,7 +6,7 @@ pipeline {
 
     environment {
         imageName = "mypython-flaskapp"
-        tagName = "v1.0.0"
+        tagName = "v1.1.${BUILD_NUMBER}"
         profileDockerHub = "priyasivath"
         scannerHome = tool "SonarScanner-Linux"
         registryNexus = "192.168.0.155:8085/"
