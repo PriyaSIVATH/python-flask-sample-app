@@ -3,6 +3,12 @@ pipeline {
     agent {
         label 'docker-agent1'
     }
+
+    environment {
+        imageName = "mypython-flaskapp"
+        tagName = "v1.0.0"
+        profileDockerHub = "priyasivath"
+    }
     
     stages {
         stage('Git-Checkout') {
@@ -19,6 +25,6 @@ pipeline {
         }
 
         
-        
+
     }
 }
