@@ -8,6 +8,7 @@ pipeline {
         imageName = "mypython-flaskapp"
         tagName = "v1.0.0"
         profileDockerHub = "priyasivath"
+        scannerHome = tool "SonarScanner-Linux"
     }
     
     stages {
@@ -24,6 +25,17 @@ pipeline {
                 sh "docker build -t ${imageName+':'+tagName} ."
             }
         }
+
+        stage('SonarQube Code Analysis') {
+            steps {
+                // One or more steps need to be included within the steps block.
+                withSonarQubeEnv(installationName: 'sonarqube1') {
+                    // some block
+                   sh "${scannerHome}/bin/sonar-scanner" 
+                }
+            }
+        }
+
 
 
         
