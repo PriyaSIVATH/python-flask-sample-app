@@ -70,7 +70,7 @@ pipeline {
                         dockerImage.push("${tagName}") */
 
                     withDockerRegistry(credentialsId: 'nexus-repo-manager', url: 'http://'+ registryNexus) {
-                       sh "docker push ${registry+'/'+imageName+':'+tagName}" 
+                       sh "docker push ${registryNexus+'/'+imageName+':'+tagName}" 
 
                     }
                 }
