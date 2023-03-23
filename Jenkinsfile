@@ -17,13 +17,20 @@ pipeline {
             }
         }
         
-        stage('Image Build') {
-    	    // agent any
-            steps {
-      	        // sh 'docker build -t python-flask-app:v1.0.0 .'
-                sh "docker build -t ${profileDockerHub+'/'+imageName+':'+tagName} ."
+        stage('Sequential Stage - Docker Hub') {
+            stages {
+                // One or more stages need to be included within the stages block.
+                stage('Image Build') {
+    	            // agent any
+                    steps {
+      	                // sh 'docker build -t python-flask-app:v1.0.0 .'
+                        sh "docker build -t ${profileDockerHub+'/'+imageName+':'+tagName} ."
+                    }
+                }
             }
         }
+        
+        
 
         
 
