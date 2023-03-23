@@ -13,7 +13,7 @@ pipeline {
     
     stages {
 
-        stage('Git-Checkout') {
+        stage('Git Checkout') {
             steps {
                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/PriyaSIVATH/python-flask-sample-app.git']])
             }
@@ -36,7 +36,19 @@ pipeline {
             }
         }
 
-
+        stage("Quality Gate Status Check"){
+            steps {
+                script {
+                    // timeout(time: 1, unit: 'HOURS') {
+                    timeout(time: 2, unit: 'MINUTES') {  
+                        def qg = waitForQualityGate()
+                        if (qg.status != 'OK') {
+                            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+                        }    
+                    }  
+                }   
+            }
+        }
 
         
         // stage('Sequential Stage - Docker Hub') {
