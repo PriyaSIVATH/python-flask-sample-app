@@ -11,11 +11,21 @@ pipeline {
     }
     
     stages {
+
         stage('Git-Checkout') {
             steps {
                 checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/PriyaSIVATH/python-flask-sample-app.git']])
             }
         }
+
+        stage('Image Build') {
+            steps {
+                // One or more steps need to be included within the steps block.
+                sh "docker build -t ${imageName+':'+tagName} ."
+            }
+        }
+
+
         
         // stage('Sequential Stage - Docker Hub') {
         //     stages {
