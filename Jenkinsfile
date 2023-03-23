@@ -1,6 +1,7 @@
 pipeline {
     
     agent {
+        // label 'docker-vm'
         label 'docker-agent1'
     }
 
@@ -113,7 +114,33 @@ pipeline {
         }
         
         
+        stage('Sequential Stage - Deployment Server') {
+            agent {
+                // label 'deploy-vm'
+                label 'deployment-agent1'
+            }
+            stages {
+                 // Stopping previous running Docker containers for cleaner Docker run 
+                stage('Stopping Running Containers') {
+                    steps {
+                        sh 'docker ps -f name=mypythonflaskcontainer -q | xargs --no-run-if-empty docker container stop'
+                        sh 'docker container ls -a -fname=mypythonflaskcontainer -q | xargs -r docker container rm'
+                    }
+                }
+                stage('Docker Container Run') {
+                    steps {
+                        script {
+                            // withDockerRegistry(credentialsId: 'nexus-repo-manager', url: 'http://192.168.0.155:8085/') {
+                             // sh 'docker run -d -p 5000:5000 --rm --name pythonapp 192.168.0.155:8085/mypython-flaskapp:v1.1.0'
+                            withDockerRegistry(credentialsId: 'nexus-repo-manager', url: 'http://'+ registryNexus) {
+                                sh 'docker run -d -p 5000:5000 --rm --name mypythonflaskcontainer ' + registryNexus + imageName + ':${tagName}' 
+                            }   
+                        }
+                    }
+                }
+            }
 
+        }
         
 
     }
