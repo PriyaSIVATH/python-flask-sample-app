@@ -58,8 +58,8 @@ pipeline {
                 //  // This step should not normally be used in your script. Consult the inline help for details.
 
                 // withDockerRegistry(credentialsId: 'nexus-repo-manager', url: 'http://192.168.0.155:8085/') {
-                // withDockerRegistry(credentialsId: 'nexus-repo-manager', url: 'http://'+ registryNexus) {
-                withDockerRegistry(registryNexusCredentials, 'http://'+ registryNexus) {
+                withDockerRegistry(credentialsId: 'nexus-repo-manager', url: 'http://'+ registryNexus) {
+                // withDockerRegistry(registryNexusCredentials, 'http://'+ registryNexus) {
                     // some block
                     sh "docker push ${registry+'/'+imageName+':'+tagName}"
                 }
