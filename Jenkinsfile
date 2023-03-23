@@ -65,8 +65,13 @@ pipeline {
                     //     // sh "docker push ${registry+'/'+imageName+':'+tagName}"
                     //     dockerImage.push("${tagName}") 
                     // }
-                    docker.withRegistry( 'http://'+registryNexus, registryNexusCredentials) {
-                        dockerImage.push("${tagName}") 
+
+                    /* docker.withRegistry( 'http://'+registryNexus, registryNexusCredentials) {
+                        dockerImage.push("${tagName}") */
+
+                    withDockerRegistry(credentialsId: 'nexus-repo-manager', url: 'http://'+ registryNexus) {
+                       sh "docker push ${registry+'/'+imageName+':'+tagName}" 
+
                     }
                 }
             }
