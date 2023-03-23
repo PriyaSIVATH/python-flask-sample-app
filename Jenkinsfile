@@ -9,6 +9,8 @@ pipeline {
         tagName = "v1.0.0"
         profileDockerHub = "priyasivath"
         scannerHome = tool "SonarScanner-Linux"
+        registryNexus = "192.168.0.155:8085/"
+        registryNexusCredentials = "nexus-repo-manager"
     }
     
     stages {
