@@ -54,7 +54,7 @@ pipeline {
             }
         }
 
-        stage('Nexus Image Push ') {
+        stage('Nexus Image Pus ') {
             steps {
                 script {
                     // //    // One or more steps need to be included within the steps block.
@@ -81,7 +81,7 @@ pipeline {
                         // >> 2. build image with regsitryUrl .. -- 192.168.0.155:8085/mypython-flaskapp
                     //    sh "docker push ${registryNexus+'/'+imageName+':'+tagName}" 
 
-                        // sh "docker  tag  ${imageName+':'+tagName}  ${registryNexus+imageName+':'+tagName}"
+                        sh "docker  tag  ${imageName+':'+tagName}  ${registryNexus+imageName+':'+tagName}"
 
                         sh "docker push ${registryNexus+imageName+':'+tagName}" 
 
