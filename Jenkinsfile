@@ -54,7 +54,7 @@ pipeline {
             }
         }
 
-        stage('Nexus Image Pus ') {
+        stage('Nexus Image Push') {
             steps {
                 script {
                     // //    // One or more steps need to be included within the steps block.
@@ -91,28 +91,28 @@ pipeline {
         }
 
         
-        stage('Sequential Stage - Docker Hub') {
-            stages {
-                // One or more stages need to be included within the stages block.
-                stage('Docker Image Build') {
-    	            // agent any
-                    steps {
-      	                // sh 'docker build -t python-flask-app:v1.0.0 .'
-                        sh "docker build -t ${profileDockerHub+'/'+imageName+':'+tagName} ."
-                    }
-                }
-                stage('Docker Image Push') {
-                    steps {
-                        // One or more steps need to be included within the steps block.
-                        // This step should not normally be used in your script. Consult the inline help for details.
-                        withDockerRegistry(credentialsId: 'DockerHub-Credentials', url: '') {
-                        // some block
-                            sh "docker push ${profileDockerHub+'/'+imageName+':'+tagName}"
-                        }
-                    }
-                }
-            }
-        }
+        // stage('Sequential Stage - Docker Hub') {
+        //     stages {
+        //         // One or more stages need to be included within the stages block.
+        //         stage('Docker Image Build') {
+    	//             // agent any
+        //             steps {
+      	//                 // sh 'docker build -t python-flask-app:v1.0.0 .'
+        //                 sh "docker build -t ${profileDockerHub+'/'+imageName+':'+tagName} ."
+        //             }
+        //         }
+        //         stage('Docker Image Push') {
+        //             steps {
+        //                 // One or more steps need to be included within the steps block.
+        //                 // This step should not normally be used in your script. Consult the inline help for details.
+        //                 withDockerRegistry(credentialsId: 'DockerHub-Credentials', url: '') {
+        //                 // some block
+        //                     sh "docker push ${profileDockerHub+'/'+imageName+':'+tagName}"
+        //                 }
+        //             }
+        //         }
+        //     }
+        // }
         
         
         stage('Sequential Stage - Deployment Server') {
