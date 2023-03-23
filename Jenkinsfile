@@ -27,6 +27,16 @@ pipeline {
                         sh "docker build -t ${profileDockerHub+'/'+imageName+':'+tagName} ."
                     }
                 }
+                stage('Docker Image Push') {
+                    steps {
+                        // One or more steps need to be included within the steps block.
+                        // This step should not normally be used in your script. Consult the inline help for details.
+                        withDockerRegistry(credentialsId: 'DockerHub-Credentials', url: ' ') {
+                        // some block
+                            sh "docker push ${profileDockerHub+'/'+imageName+':'+tagName}"
+                        }
+                    }
+                }
             }
         }
         
