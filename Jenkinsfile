@@ -70,7 +70,17 @@ pipeline {
                         dockerImage.push("${tagName}") */
 
                     withDockerRegistry(credentialsId: 'nexus-repo-manager', url: 'http://'+ registryNexus) {
+                      /*  //  Need to push availble image 
+                        //  >> we have - mypython-flaskapp:v1.0.0  -- ${imageName+':'+tagName}
+                        //  >> we need - 192.168.0.155:8085/mypython-flaskapp:v1.0.0  -- ${registryNexus+imageName+':'+tagName}     */
+
+                        // 2 solutions 
+                        // >> 1. can convert the exist image to needed image using -- DOCKER TAG
+                        // >> 2. build image with regsitryUrl .. -- 192.168.0.155:8085/mypython-flaskapp
                     //    sh "docker push ${registryNexus+'/'+imageName+':'+tagName}" 
+
+                        sh "docker  tag  ${imageName+':'+tagName}  ${registryNexus+imageName+':'+tagName}"
+
                         sh "docker push ${registryNexus+imageName+':'+tagName}" 
 
                     }
